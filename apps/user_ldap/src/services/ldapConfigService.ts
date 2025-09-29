@@ -5,7 +5,7 @@
 
 import path from 'path'
 
-import { DialogSeverity, getDialogBuilder, showError, showSuccess, type IDialogButton } from '@nextcloud/dialogs'
+import { DialogSeverity, getDialogBuilder, showError, showSuccess } from '@nextcloud/dialogs'
 import axios, { AxiosError, type AxiosResponse } from '@nextcloud/axios'
 import { getAppRootUrl, generateOcsUrl } from '@nextcloud/router'
 import type { OCSResponse } from '@nextcloud/typings/ocs'

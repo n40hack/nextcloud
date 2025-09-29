@@ -47,7 +47,7 @@
 				{{ t('user_ldap', 'Verify settings and count users') }}
 			</NcButton>
 
-			<span v-if="usersCount !== undefined">{{ t('user_ldap', 'User count: {usersCount}', { usersCount }) }}</span>
+			<span v-if="usersCount !== undefined">{{ t('user_ldap', 'User count: {usersCount}', { usersCount }, { escape: false }) }}</span>
 		</div>
 	</fieldset>
 </template>
@@ -94,12 +94,12 @@ async function init() {
 	const response1 = await wizardStore.callWizardAction('determineUserObjectClasses')
 	userObjectClasses.value = response1.options.ldap_userfilter_objectclass
 	// Not using ldapConfig to avoid triggering the save logic.
-	ldapConfigs.value[selectedConfigId.value].ldapUserFilterObjectclass = response1.changes.ldap_userfilter_objectclass.join(';')
+	ldapConfigs.value[selectedConfigId.value].ldapUserFilterObjectclass = response1.changes.ldap_userfilter_objectclass?.join(';') ?? ''
 
 	const response2 = await wizardStore.callWizardAction('determineGroupsForUsers')
 	userGroups.value = response2.options.ldap_userfilter_groups
 	// Not using ldapConfig to avoid triggering the save logic.
-	ldapConfigs.value[selectedConfigId.value].ldapUserFilterGroups = response2.changes.ldap_userfilter_groups.join(';')
+	ldapConfigs.value[selectedConfigId.value].ldapUserFilterGroups = response2.changes.ldap_userfilter_groups?.join(';') ?? ''
 }
 
 init()
@@ -117,8 +117,8 @@ async function reloadFilters() {
 }
 
 async function countUsers() {
-	const { changes: { ldap_test_base: ldapTestBase } } = await wizardStore.callWizardAction('countUsers')
-	usersCount.value = ldapTestBase
+	const { changes: { ldap_user_count: ldapUserCount } } = await wizardStore.callWizardAction('countUsers')
+	usersCount.value = ldapUserCount
 }
 
 async function toggleFilterMode(value: boolean) {
