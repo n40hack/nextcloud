@@ -17,7 +17,6 @@
 		</div>
 
 		<div class="ldap-wizard__users__line ldap-wizard__users__user-filter-groups">
-
 			<NcSelect v-model="ldapUserFilterGroups"
 				class="ldap-wizard__users__user-filter-groups__select"
 				:disabled="ldapUserFilterMode"

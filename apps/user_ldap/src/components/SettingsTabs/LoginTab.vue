@@ -34,9 +34,10 @@
 			</NcCheckboxRadioSwitch>
 
 			<div v-if="ldapLoginFilterMode">
-				<NcTextArea :value.sync="ldapConfig.ldapLoginFilter"
+				<NcTextArea :value="ldapConfig.ldapLoginFilter"
 					:placeholder="t('user_ldap', 'Edit LDAP Query')"
-					:helper-text="t('user_ldap', 'Defines the filter to apply, when login is attempted. `%%uid` replaces the username in the login action. Example: `uid=%%uid`')" />
+					:helper-text="t('user_ldap', 'Defines the filter to apply, when login is attempted. `%%uid` replaces the username in the login action. Example: `uid=%%uid`')"
+					@change.native="(event) => ldapConfig.ldapLoginFilter = event.target.value" />
 			</div>
 			<div v-else>
 				<label>{{ t('user_ldap', 'LDAP Filter:') }}</label>
@@ -45,10 +46,11 @@
 		</div>
 
 		<div class="ldap-wizard__login__line">
-			<NcTextField :value.sync="testUsername"
+			<NcTextField :value="testUsername"
 				:helper-text="t('user_ldap', 'Attempts to receive a DN for the given login name and the current login filter')"
 				:placeholder="t('user_ldap', 'Test Login name')"
-				autocomplete="off" />
+				autocomplete="off"
+				@change.native="(event) => testUsername = event.target.value" />
 
 			<NcButton :disabled="testUsername.length === 0"
 				@click="verifyLoginName">

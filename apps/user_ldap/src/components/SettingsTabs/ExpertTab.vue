@@ -10,8 +10,9 @@
 			<NcTextField id="ldap_expert_username_attr"
 				autocomplete="off"
 				:label="t('user_ldap', 'Internal Username Attribute:')"
-				:value.sync="ldapConfig.ldapExpertUsernameAttr"
-				:label-outside="true" />
+				:value="ldapConfig.ldapExpertUsernameAttr"
+				:label-outside="true"
+				@change.native="(event) => ldapConfig.ldapExpertUsernameAttr = event.target.value" />
 		</div>
 
 		<div class="ldap-wizard__expert__line">
@@ -20,10 +21,12 @@
 			<NcTextField id="ldap_expert_uuid_user_attr"
 				autocomplete="off"
 				:label="t('user_ldap', 'UUID Attribute for Users')"
-				:value.sync="ldapConfig.ldapExpertUUIDUserAttr" />
+				:value="ldapConfig.ldapExpertUUIDUserAttr"
+				@change.native="(event) => ldapConfig.ldapExpertUUIDUserAttr = event.target.value" />
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'UUID Attribute for Groups')"
-				:value.sync="ldapConfig.ldapExpertUUIDGroupAttr" />
+				:value="ldapConfig.ldapExpertUUIDGroupAttr"
+				@change.native="(event) => ldapConfig.ldapExpertUUIDGroupAttr = event.target.value" />
 		</div>
 	</fieldset>
 </template>

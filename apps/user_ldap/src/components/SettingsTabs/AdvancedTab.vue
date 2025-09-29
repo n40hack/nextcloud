@@ -15,12 +15,14 @@
 
 			<NcTextField autocomplete="off"
 				:label=" t('user_ldap', 'Backup (Replica) Host')"
-				:value.sync="ldapConfig.ldapBackupHost"
-				:helper-text="t('user_ldap', 'Give an optional backup host. It must be a replica of the main LDAP/AD server.')" />
+				:value="ldapConfig.ldapBackupHost"
+				:helper-text="t('user_ldap', 'Give an optional backup host. It must be a replica of the main LDAP/AD server.')"
+				@change.native="(event) => ldapConfig.ldapBackupHost = event.target.value" />
 
 			<NcTextField type="number"
-				:value.sync="ldapConfig.ldapBackupPort"
-				:label="t('user_ldap', 'Backup (Replica) Port') " />
+				:value="ldapConfig.ldapBackupPort"
+				:label="t('user_ldap', 'Backup (Replica) Port') "
+				@change.native="(event) => ldapConfig.ldapBackupPort = event.target.value" />
 
 			<NcCheckboxRadioSwitch :checked="ldapConfig.ldapOverrideMainServer === '1'"
 				:aria-label="t('user_ldap', 'Only connect to the replica server.')"
@@ -36,31 +38,36 @@
 
 			<NcTextField type="number"
 				:label="t('user_ldap', 'Cache Time-To-Live')"
-				:value.sync="ldapConfig.ldapCacheTTL"
-				:helper-text="t('user_ldap', 'in seconds. A change empties the cache.')" />
+				:value="ldapConfig.ldapCacheTTL"
+				:helper-text="t('user_ldap', 'in seconds. A change empties the cache.')"
+				@change.native="(event) => ldapConfig.ldapCacheTTL = event.target.value" />
 		</details>
 
 		<details name="ldap-wizard__advanced__section" class="ldap-wizard__advanced__section">
 			<summary><h3>{{ t('user_ldap', 'Directory Settings') }}</h3></summary>
 
 			<NcTextField autocomplete="off"
-				:value.sync="ldapConfig.ldapUserDisplayName"
+				:value="ldapConfig.ldapUserDisplayName"
 				:label="t('user_ldap', 'User Display Name Field')"
-				:helper-text="t('user_ldap', 'The LDAP attribute to use to generate the user\'s display name.')" />
+				:helper-text="t('user_ldap', 'The LDAP attribute to use to generate the user\'s display name.')"
+				@change.native="(event) => ldapConfig.ldapUserDisplayName = event.target.value" />
 
 			<NcTextField autocomplete="off"
-				:value.sync="ldapConfig.ldapUserDisplayName2"
+				:value="ldapConfig.ldapUserDisplayName2"
 				:label="t('user_ldap', '2nd User Display Name Field')"
-				:helper-text="t('user_ldap', 'Optional. An LDAP attribute to be added to the display name in brackets. Results in e.g. »John Doe (john.doe@example.org)«.')" />
+				:helper-text="t('user_ldap', 'Optional. An LDAP attribute to be added to the display name in brackets. Results in e.g. »John Doe (john.doe@example.org)«.')"
+				@change.native="(event) => ldapConfig.ldapUserDisplayName2 = event.target.value" />
 
-			<NcTextArea :value.sync="ldapConfig.ldapBaseUsers"
+			<NcTextArea :value="ldapConfig.ldapBaseUsers"
 				:placeholder="t('user_ldap', 'One User Base DN per line')"
-				:label="t('user_ldap', 'Base User Tree')" />
+				:label="t('user_ldap', 'Base User Tree')"
+				@change.native="(event) => ldapConfig.ldapBaseUsers = event.target.value" />
 
-			<NcTextArea :value.sync="ldapConfig.ldapAttributesForUserSearch"
+			<NcTextArea :value="ldapConfig.ldapAttributesForUserSearch"
 				:placeholder="t('user_ldap', 'Optional; one attribute per line')"
 				:label="t('user_ldap', 'Base User Tree')"
-				:helper-text="t('user_ldap', 'User Search Attributes')" />
+				:helper-text="t('user_ldap', 'User Search Attributes')"
+				@change.native="(event) => ldapConfig.ldapAttributesForUserSearch = event.target.value" />
 
 			<NcCheckboxRadioSwitch :checked="ldapConfig.markRemnantsAsDisabled === '1'"
 				:aria-label="t('user_ldap', 'When switched on, users imported from LDAP which are then missing will be disabled')"
@@ -69,17 +76,20 @@
 			</NcCheckboxRadioSwitch>
 
 			<NcTextField autocomplete="off"
-				:value.sync="ldapConfig.ldapGroupDisplayName"
+				:value="ldapConfig.ldapGroupDisplayName"
 				:label="t('user_ldap', 'Group Display Name Field')"
-				:title="t('user_ldap', 'The LDAP attribute to use to generate the groups\'s display name.')" />
+				:title="t('user_ldap', 'The LDAP attribute to use to generate the groups\'s display name.')"
+				@change.native="(event) => ldapConfig.ldapGroupDisplayName = event.target.value" />
 
-			<NcTextArea :value.sync="ldapConfig.ldapBaseGroups"
+			<NcTextArea :value="ldapConfig.ldapBaseGroups"
 				:placeholder="t('user_ldap', 'One Group Base DN per line')"
-				:label="t('user_ldap', 'Base Group Tree')" />
+				:label="t('user_ldap', 'Base Group Tree')"
+				@change.native="(event) => ldapConfig.ldapBaseGroups = event.target.value" />
 
-			<NcTextArea :value.sync="ldapConfig.ldapAttributesForGroupSearch"
+			<NcTextArea :value="ldapConfig.ldapAttributesForGroupSearch"
 				:placeholder="t('user_ldap', 'Optional; one attribute per line')"
-				:label="t('user_ldap', 'Group Search Attributes')" />
+				:label="t('user_ldap', 'Group Search Attributes')"
+				@change.native="(event) => ldapConfig.ldapAttributesForGroupSearch = event.target.value" />
 
 			<NcSelect v-model="ldapConfig.ldapGroupMemberAssocAttr"
 				:options="Object.keys(groupMemberAssociation)"
@@ -94,8 +104,9 @@
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'Dynamic Group Member URL')"
-				:value.sync="ldapConfig.ldapDynamicGroupMemberURL"
-				:helper-text="t('user_ldap', 'The LDAP attribute that on group objects contains an LDAP search URL that determines what objects belong to the group. (An empty setting disables dynamic group membership functionality.)')" />
+				:value="ldapConfig.ldapDynamicGroupMemberURL"
+				:helper-text="t('user_ldap', 'The LDAP attribute that on group objects contains an LDAP search URL that determines what objects belong to the group. (An empty setting disables dynamic group membership functionality.)')"
+				@change.native="(event) => ldapConfig.ldapDynamicGroupMemberURL = event.target.value" />
 
 			<NcCheckboxRadioSwitch :checked="ldapConfig.ldapNestedGroups === '1'"
 				:aria-label="t('user_ldap', 'When switched on, groups that contain groups are supported. (Only works if the group member attribute contains DNs.)')"
@@ -105,8 +116,9 @@
 
 			<NcTextField type="number"
 				:label="t('user_ldap', 'Paging chunksize')"
-				:value.sync="ldapConfig.ldapPagingSize"
-				:helper-text="t('user_ldap', 'Chunksize used for paged LDAP searches that may return bulky results like user or group enumeration. (Setting it 0 disables paged LDAP searches in those situations.)')" />
+				:value="ldapConfig.ldapPagingSize"
+				:helper-text="t('user_ldap', 'Chunksize used for paged LDAP searches that may return bulky results like user or group enumeration. (Setting it 0 disables paged LDAP searches in those situations.)')"
+				@change.native="(event) => ldapConfig.ldapPagingSize = event.target.value" />
 
 			<NcCheckboxRadioSwitch :checked="ldapConfig.turnOnPasswordChange === '1'"
 				:aria-label="t('user_ldap', 'Allow LDAP users to change their password and allow Super Administrators and Group Administrators to change the password of their LDAP users. Only works when access control policies are configured accordingly on the LDAP server. As passwords are sent in plaintext to the LDAP server, transport encryption must be used and password hashing should be configured on the LDAP server.')"
@@ -119,37 +131,43 @@
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'Default password policy DN')"
-				:value.sync="ldapConfig.ldapDefaultPPolicyDN"
-				:helper-text="t('user_ldap', 'The DN of a default password policy that will be used for password expiry handling. Works only when LDAP password changes per user are enabled and is only supported by OpenLDAP. Leave empty to disable password expiry handling.')" />
+				:value="ldapConfig.ldapDefaultPPolicyDN"
+				:helper-text="t('user_ldap', 'The DN of a default password policy that will be used for password expiry handling. Works only when LDAP password changes per user are enabled and is only supported by OpenLDAP. Leave empty to disable password expiry handling.')"
+				@change.native="(event) => ldapConfig.ldapDefaultPPolicyDN = event.target.value" />
 		</details>
 
 		<details name="ldap-wizard__advanced__section" class="ldap-wizard__advanced__section">
 			<summary><h3>{{ t('user_ldap', 'Special Attributes') }}</h3></summary>
 
 			<NcTextField autocomplete="off"
-				:value.sync="ldapConfig.ldapQuotaAttribute"
+				:value="ldapConfig.ldapQuotaAttribute"
 				:label="t('user_ldap', 'Quota Field')"
-				:helper-text="t('user_ldap', 'Leave empty for user\'s default quota. Otherwise, specify an LDAP/AD attribute.')" />
+				:helper-text="t('user_ldap', 'Leave empty for user\'s default quota. Otherwise, specify an LDAP/AD attribute.')"
+				@change.native="(event) => ldapConfig.ldapQuotaAttribute = event.target.value" />
 
 			<NcTextField autocomplete="off"
-				:value.sync="ldapConfig.ldapQuotaDefault"
+				:value="ldapConfig.ldapQuotaDefault"
 				:label="t('user_ldap', 'Quota Default')"
-				:helper-text="t('user_ldap', 'Override default quota for LDAP users who do not have a quota set in the Quota Field.')" />
+				:helper-text="t('user_ldap', 'Override default quota for LDAP users who do not have a quota set in the Quota Field.')"
+				@change.native="(event) => ldapConfig.ldapQuotaDefault = event.target.value" />
 
 			<NcTextField autocomplete="off"
-				:value.sync="ldapConfig.ldapEmailAttribute"
+				:value="ldapConfig.ldapEmailAttribute"
 				:label="t('user_ldap', 'Email Field')"
-				:helper-text="t('user_ldap', 'Set the user\'s email from their LDAP attribute. Leave it empty for default behaviour.')" />
+				:helper-text="t('user_ldap', 'Set the user\'s email from their LDAP attribute. Leave it empty for default behaviour.')"
+				@change.native="(event) => ldapConfig.ldapEmailAttribute = event.target.value" />
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'User Home Folder Naming Rule')"
-				:value.sync="ldapConfig.homeFolderNamingRule"
-				:helper-text="t('user_ldap', 'Leave empty for username (default). Otherwise, specify an LDAP/AD attribute.')" />
+				:value="ldapConfig.homeFolderNamingRule"
+				:helper-text="t('user_ldap', 'Leave empty for username (default). Otherwise, specify an LDAP/AD attribute.')"
+				@change.native="(event) => ldapConfig.homeFolderNamingRule = event.target.value" />
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', '`$home` Placeholder Field')"
-				:value.sync="ldapConfig.ldapExtStorageHomeAttribute"
-				:helper-text="t('user_ldap', '$home in an external storage configuration will be replaced with the value of the specified attribute')" />
+				:value="ldapConfig.ldapExtStorageHomeAttribute"
+				:helper-text="t('user_ldap', '$home in an external storage configuration will be replaced with the value of the specified attribute')"
+				@change.native="(event) => ldapConfig.ldapExtStorageHomeAttribute = event.target.value" />
 		</details>
 
 		<details name="ldap-wizard__advanced__section" class="ldap-wizard__advanced__section">
@@ -157,53 +175,63 @@
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'Phone Field')"
-				:value.sync="ldapConfig.ldapAttributePhone"
-				:helper-text="t('user_ldap', 'User profile Phone will be set from the specified attribute')" />
+				:value="ldapConfig.ldapAttributePhone"
+				:helper-text="t('user_ldap', 'User profile Phone will be set from the specified attribute')"
+				@change.native="(event) => ldapConfig.ldapAttributePhone = event.target.value" />
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'Website Field')"
-				:value.sync="ldapConfig.ldapAttributeWebsite"
-				:helper-text="t('user_ldap', 'User profile Website will be set from the specified attribute')" />
+				:value="ldapConfig.ldapAttributeWebsite"
+				:helper-text="t('user_ldap', 'User profile Website will be set from the specified attribute')"
+				@change.native="(event) => ldapConfig.ldapAttributeWebsite = event.target.value" />
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'Address Field')"
-				:value.sync="ldapConfig.ldapAttributeAddress"
-				:helper-text="t('user_ldap', 'User profile Address will be set from the specified attribute')" />
+				:value="ldapConfig.ldapAttributeAddress"
+				:helper-text="t('user_ldap', 'User profile Address will be set from the specified attribute')"
+				@change.native="(event) => ldapConfig.ldapAttributeAddress = event.target.value" />
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'Twitter Field')"
-				:value.sync="ldapConfig.ldapAttributeTwitter"
-				:helper-text="t('user_ldap', 'User profile Twitter will be set from the specified attribute')" />
+				:value="ldapConfig.ldapAttributeTwitter"
+				:helper-text="t('user_ldap', 'User profile Twitter will be set from the specified attribute')"
+				@change.native="(event) => ldapConfig.ldapAttributeTwitter = event.target.value" />
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'Fediverse Field')"
-				:value.sync="ldapConfig.ldapAttributeFediverse"
-				:helper-text="t('user_ldap', 'User profile Fediverse will be set from the specified attribute')" />
+				:value="ldapConfig.ldapAttributeFediverse"
+				:helper-text="t('user_ldap', 'User profile Fediverse will be set from the specified attribute')"
+				@change.native="(event) => ldapConfig.ldapAttributeFediverse = event.target.value" />
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'Organisation Field')"
-				:value.sync="ldapConfig.ldapAttributeOrganisation"
-				:helper-text="t('user_ldap', 'User profile Organisation will be set from the specified attribute')" />
+				:value="ldapConfig.ldapAttributeOrganisation"
+				:helper-text="t('user_ldap', 'User profile Organisation will be set from the specified attribute')"
+				@change.native="(event) => ldapConfig.ldapAttributeOrganisation = event.target.value" />
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'Role Field')"
-				:value.sync="ldapConfig.ldapAttributeRole"
-				:helper-text="t('user_ldap', 'User profile Role will be set from the specified attribute')" />
+				:value="ldapConfig.ldapAttributeRole"
+				:helper-text="t('user_ldap', 'User profile Role will be set from the specified attribute')"
+				@change.native="(event) => ldapConfig.ldapAttributeRole = event.target.value" />
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'Headline Field')"
-				:value.sync="ldapConfig.ldapAttributeHeadline"
-				:helper-text="t('user_ldap', 'User profile Headline will be set from the specified attribute')" />
+				:value="ldapConfig.ldapAttributeHeadline"
+				:helper-text="t('user_ldap', 'User profile Headline will be set from the specified attribute')"
+				@change.native="(event) => ldapConfig.ldapAttributeHeadline = event.target.value" />
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'Biography Field')"
-				:value.sync="ldapConfig.ldapAttributeBiography"
-				:helper-text="t('user_ldap', 'User profile Biography will be set from the specified attribute')" />
+				:value="ldapConfig.ldapAttributeBiography"
+				:helper-text="t('user_ldap', 'User profile Biography will be set from the specified attribute')"
+				@change.native="(event) => ldapConfig.ldapAttributeBiography = event.target.value" />
 
 			<NcTextField autocomplete="off"
 				:label="t('user_ldap', 'Birthdate Field')"
-				:value.sync="ldapConfig.ldapAttributeBirthDate"
-				:helper-text="t('user_ldap', 'User profile Date of birth will be set from the specified attribute')" />
+				:value="ldapConfig.ldapAttributeBirthDate"
+				:helper-text="t('user_ldap', 'User profile Date of birth will be set from the specified attribute')"
+				@change.native="(event) => ldapConfig.ldapAttributeBirthDate = event.target.value" />
 		</details>
 	</fieldset>
 </template>

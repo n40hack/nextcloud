@@ -23,15 +23,17 @@
 		</div>
 
 		<div class="ldap-wizard__server__line">
-			<NcTextField :value.sync="ldapConfig.ldapHost"
+			<NcTextField :value="ldapConfig.ldapHost"
 				:helper-text="t('user_ldap', 'You can omit the protocol, unless you require SSL. If so, start with ldaps://')"
 				:placeholder="t('user_ldap', 'Host')"
-				autocomplete="off" />
+				autocomplete="off"
+				@change.native="(event) => ldapConfig.ldapHost = event.target.value" />
 			<div class="ldap-wizard__server__host__port">
-				<NcTextField :value.sync="ldapConfig.ldapPort"
+				<NcTextField :value="ldapConfig.ldapPort"
 					:placeholder="t('user_ldap', 'Port')"
 					type="number"
-					autocomplete="off" />
+					autocomplete="off"
+					@change.native="(event) => ldapConfig.ldapPort = event.target.value" />
 				<NcButton :disabled="currentWizardActions.includes('guessPortAndTLS')"
 					@click="guessPortAndTLS">
 					{{ t('user_ldap', 'Detect Port') }}
@@ -40,18 +42,20 @@
 		</div>
 
 		<div class="ldap-wizard__server__line">
-			<NcTextField :value.sync="localLdapAgentName"
+			<NcTextField :value="localLdapAgentName"
 				:helper-text="t('user_ldap', 'The DN of the client user with which the bind shall be done, e.g. uid=agent,dc=example,dc=com. For anonymous access, leave DN and Password empty.')"
 				:placeholder="t('user_ldap', 'User DN')"
-				autocomplete="off" />
+				autocomplete="off"
+				@change.native="(event) => localLdapAgentName = event.target.value" />
 		</div>
 
 		<div class="ldap-wizard__server__line">
 			<NcTextField type="password"
 				:helper-text="t('user_ldap', 'For anonymous access, leave DN and Password empty.')"
-				:value.sync="localLdapAgentPassword"
+				:value="localLdapAgentPassword"
 				:placeholder="t('user_ldap', 'Password')"
-				autocomplete="off" />
+				autocomplete="off"
+				@change.native="(event) => localLdapAgentPassword = event.target.value" />
 
 			<NcButton :disabled="!needsToSaveCredentials" @click="updateCredentials">
 				{{ t('user_ldap', 'Save Credentials') }}
@@ -60,9 +64,10 @@
 
 		<div class="ldap-wizard__server__line">
 			<NcTextArea :label="t('user_ldap', 'Base DN')"
-				:value.sync="ldapConfig.ldapBase"
+				:value="ldapConfig.ldapBase"
 				:placeholder="t('user_ldap', 'One Base DN per line')"
-				:helper-text="t('user_ldap', 'You can specify Base DN for users and groups in the Advanced tab')" />
+				:helper-text="t('user_ldap', 'You can specify Base DN for users and groups in the Advanced tab')"
+				@change.native="(event) => ldapConfig.ldapBase = event.target.value" />
 
 			<NcButton :disabled="currentWizardActions.includes('guessBaseDN')" @click="guessBaseDN">
 				{{ t('user_ldap', 'Detect Base DN') }}
