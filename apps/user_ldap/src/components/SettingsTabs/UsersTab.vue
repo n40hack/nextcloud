@@ -160,11 +160,6 @@ async function toggleFilterMode(value: boolean) {
 	&__user-filter-groups {
 		display: flex;
 		gap: 16px;
-
-		&__select {
-			min-width: 50%;
-			flex-grow: 1;
-		}
 	}
 
 	&__user-filter {
