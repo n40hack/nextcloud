@@ -50,10 +50,8 @@ const loading = ref(false)
 const result = ref<{message: string, status: 'error'|'success'}|null>(null)
 const isValide = computed(() => result.value?.status === 'success')
 
-watch(updatingConfig, (newVal) => {
-	if (newVal === 0) {
-		testSelectedConfig()
-	}
+watch(updatingConfig, () => {
+	result.value = null
 })
 
 async function testSelectedConfig() {
