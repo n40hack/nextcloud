@@ -5,12 +5,12 @@
 <template>
 	<fieldset class="ldap-wizard__server">
 		<div class="ldap-wizard__server__line">
-			<NcButton
-				:aria-label="t('user_ldap', 'Copy current configuration into new directory binding')"
+			<NcButton :aria-label="t('user_ldap', 'Copy current configuration into new directory binding')"
 				@click="() => ldapConfigsStore.copyConfig(ldapConfigId)">
 				<template #icon>
 					<ContentCopy :size="20" />
 				</template>
+				{{ t('user_ldap', 'Copy configuration') }}
 			</NcButton>
 			<NcButton type="error"
 				:aria-label="t('user_ldap', 'Delete the current configuration')"
