@@ -159,8 +159,7 @@ async function requestClearMapping(subject: 'user'|'group') {
 	}
 
 	&__tab-container {
-		border: 1px solid var(--color-text-light);
-		border-radius: var(--border-radius);
+		border-bottom: 1px solid var(--color-text-light);
 		padding: 0 16px 16px 16px;
 	}
 

@@ -43,11 +43,12 @@
 		</div>
 
 		<div class="ldap-wizard__users__line ldap-wizard__users__user-count-check">
-			<NcButton @click="countUsers">
+			<NcButton :disabled="loadingUserCount" @click="countUsers">
 				{{ t('user_ldap', 'Verify settings and count users') }}
 			</NcButton>
 
-			<span v-if="usersCount !== undefined">{{ t('user_ldap', 'User count: {usersCount}', { usersCount }, { escape: false }) }}</span>
+			<NcLoadingIcon v-if="loadingUserCount" :size="16" />
+			<span v-if="usersCount !== undefined && !loadingUserCount">{{ t('user_ldap', 'User count: {usersCount}', { usersCount }, { escape: false }) }}</span>
 		</div>
 	</fieldset>
 </template>
@@ -57,7 +58,7 @@ import { ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import { t } from '@nextcloud/l10n'
-import { NcButton, NcTextArea, NcCheckboxRadioSwitch, NcSelect } from '@nextcloud/vue'
+import { NcButton, NcTextArea, NcCheckboxRadioSwitch, NcSelect, NcLoadingIcon } from '@nextcloud/vue'
 import { getCapabilities } from '@nextcloud/capabilities'
 
 import { useLDAPConfigsStore } from '../../store/configs'
@@ -74,6 +75,7 @@ const ldapConfig = ldapConfigsStore.selectedConfig({
 })
 
 const usersCount = ref<number|undefined>(undefined)
+const loadingUserCount = ref(false)
 
 const instanceName = (getCapabilities() as { theming: { name:string } }).theming.name
 
@@ -117,8 +119,13 @@ async function reloadFilters() {
 }
 
 async function countUsers() {
-	const { changes: { ldap_user_count: ldapUserCount } } = await wizardStore.callWizardAction('countUsers')
-	usersCount.value = ldapUserCount
+	try {
+		loadingUserCount.value = true
+		const { changes: { ldap_user_count: ldapUserCount } } = await wizardStore.callWizardAction('countUsers')
+		usersCount.value = ldapUserCount
+	} finally {
+		loadingUserCount.value = false
+	}
 }
 
 async function toggleFilterMode(value: boolean) {

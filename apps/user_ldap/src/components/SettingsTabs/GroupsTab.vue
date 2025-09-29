@@ -4,7 +4,8 @@
  -->
 <template>
 	<fieldset class="ldap-wizard__groups">
-		{{ t('user_ldap', 'Groups meeting these criteria are available in {instanceName}:', {instanceName}) }}
+		{{ t('user_ldap', 'Groups meeting these criteria are available in {instanceName}:',
+		{instanceName}) }}
 
 		<div class="ldap-wizard__groups__line ldap-wizard__groups__filter-selection">
 			<NcSelect v-model="ldapGroupFilterObjectclass"
@@ -40,11 +41,12 @@
 		</div>
 
 		<div class="ldap-wizard__groups__line ldap-wizard__groups__groups-count-check">
-			<NcButton @click="countGroups">
+			<NcButton :disabled="loadingGroupCount" @click="countGroups">
 				{{ t('user_ldap', 'Verify settings and count the groups') }}
 			</NcButton>
 
-			<span v-if="groupsCountLabel !== undefined">{{ groupsCountLabel }}</span>
+			<NcLoadingIcon v-if="loadingGroupCount" :size="16" />
+			<span v-if="groupsCountLabel !== undefined && !loadingGroupCount">{{ groupsCountLabel }}</span>
 		</div>
 	</fieldset>
 </template>
@@ -54,7 +56,7 @@ import { ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import { t } from '@nextcloud/l10n'
-import { NcButton, NcTextArea, NcCheckboxRadioSwitch, NcSelect } from '@nextcloud/vue'
+import { NcButton, NcTextArea, NcCheckboxRadioSwitch, NcSelect, NcLoadingIcon } from '@nextcloud/vue'
 import { getCapabilities } from '@nextcloud/capabilities'
 
 import { useLDAPConfigsStore } from '../../store/configs'
@@ -76,6 +78,7 @@ const groupsCountLabel = ref<number|undefined>(undefined)
 
 const groupObjectClasses = ref([] as string[])
 const groupGroups = ref([] as string[])
+const loadingGroupCount = ref(false)
 
 const ldapGroupFilterObjectclass = computed({
 	get() { return ldapConfig.ldapGroupFilterObjectclass.split(';').filter((item) => item !== '') },
@@ -104,8 +107,13 @@ async function getGroupFilter() {
 }
 
 async function countGroups() {
-	const { changes: { ldap_group_count: ldapGroupCount } } = await wizardStore.callWizardAction('countGroups')
-	groupsCountLabel.value = ldapGroupCount
+	try {
+		loadingGroupCount.value = true
+		const { changes: { ldap_group_count: ldapGroupCount } } = await wizardStore.callWizardAction('countGroups')
+		groupsCountLabel.value = ldapGroupCount
+	} finally {
+		loadingGroupCount.value = false
+	}
 }
 
 async function toggleFilterMode(value: boolean) {
