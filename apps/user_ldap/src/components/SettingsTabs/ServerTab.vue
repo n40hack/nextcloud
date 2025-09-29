@@ -77,15 +77,6 @@
 				{{ t('user_ldap', 'Test Base DN') }}
 			</NcButton>
 		</div>
-
-		<div class="ldap-wizard__server__line">
-			<NcCheckboxRadioSwitch :checked="ldapConfig.ldapExperiencedAdmin === '1'"
-				:aria-label="t('user_ldap', 'Avoids automatic LDAP requests. Better for bigger setups, but requires some LDAP knowledge.')"
-				@update:checked="ldapConfig.ldapExperiencedAdmin = $event ? '1' : '0'">
-				{{ t('user_ldap', 'Manually enter LDAP filters (recommended for large directories)')
-				}}
-			</NcCheckboxRadioSwitch>
-		</div>
 	</fieldset>
 </template>
 
