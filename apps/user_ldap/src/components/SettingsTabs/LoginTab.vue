@@ -7,18 +7,6 @@
 		{{ t('user_ldap', 'When logging in, {instanceName} will find the user based on the following attributes:', { instanceName }) }}
 
 		<div class="ldap-wizard__login__line ldap-wizard__login__login-attributes">
-			<NcCheckboxRadioSwitch v-model="ldapLoginFilterUsername"
-				:disabled="ldapLoginFilterMode"
-				:aria-label="t('user_ldap', 'Allows login against the LDAP/AD username, which is either `uid` or `sAMAccountName` and will be detected.')">
-				{{ t('user_ldap', 'LDAP/AD Username') }}
-			</NcCheckboxRadioSwitch>
-
-			<NcCheckboxRadioSwitch v-model="ldapLoginFilterEmail"
-				:disabled="ldapLoginFilterMode"
-				:aria-label="t('user_ldap', 'Allows login against an email attribute. `mail` and `mailPrimaryAddress` allowed.')">
-				{{ t('user_ldap', 'LDAP/AD Email Address') }}
-			</NcCheckboxRadioSwitch>
-
 			<NcSelect v-model="ldapLoginFilterAttributes"
 				:close-on-select="false"
 				:disabled="ldapLoginFilterMode"

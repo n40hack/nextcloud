@@ -5,7 +5,14 @@
 <template>
 	<fieldset class="ldap-wizard__server">
 		<div class="ldap-wizard__server__line">
-			<NcButton :aria-label="t('user_ldap', 'Copy current configuration into new directory binding')"
+			<NcCheckboxRadioSwitch :checked="ldapConfig.ldapConfigurationActive === '1'"
+				:aria-label="t('user_ldap', 'When unchecked, this configuration will be skipped.')"
+				@update:checked="ldapConfig.ldapConfigurationActive = $event ? '1' : '0'">
+				{{ t('user_ldap', 'Configuration Active') }}
+			</NcCheckboxRadioSwitch>
+
+			<NcButton
+				:aria-label="t('user_ldap', 'Copy current configuration into new directory binding')"
 				@click="() => ldapConfigsStore.copyConfig(ldapConfigId)">
 				<template #icon>
 					<ContentCopy :size="20" />

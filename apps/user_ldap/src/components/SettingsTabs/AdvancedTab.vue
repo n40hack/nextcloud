@@ -7,12 +7,6 @@
 		<details open="true" name="ldap-wizard__advanced__section" class="ldap-wizard__advanced__section">
 			<summary><h3>{{ t('user_ldap', 'Connection Settings') }}</h3></summary>
 
-			<NcCheckboxRadioSwitch :checked="ldapConfig.ldapConfigurationActive === '1'"
-				:aria-label="t('user_ldap', 'When unchecked, this configuration will be skipped.')"
-				@update:checked="ldapConfig.ldapConfigurationActive = $event ? '1' : '0'">
-				{{ t('user_ldap', 'Configuration Active') }}
-			</NcCheckboxRadioSwitch>
-
 			<NcTextField autocomplete="off"
 				:label=" t('user_ldap', 'Backup (Replica) Host')"
 				:value="ldapConfig.ldapBackupHost"
@@ -65,8 +59,7 @@
 
 			<NcTextArea :value="ldapConfig.ldapAttributesForUserSearch"
 				:placeholder="t('user_ldap', 'Optional; one attribute per line')"
-				:label="t('user_ldap', 'Base User Tree')"
-				:helper-text="t('user_ldap', 'User Search Attributes')"
+				:label="t('user_ldap', 'User Search Attributes')"
 				@change.native="(event) => ldapConfig.ldapAttributesForUserSearch = event.target.value" />
 
 			<NcCheckboxRadioSwitch :checked="ldapConfig.markRemnantsAsDisabled === '1'"
