@@ -30,16 +30,16 @@
 		<div class="ldap-wizard__login__line ldap-wizard__login__user-login-filter">
 			<NcCheckboxRadioSwitch :checked="ldapLoginFilterMode"
 				@update:checked="toggleFilterMode">
-				{{ t('user_name', 'Edit LDAP Query') }}
+				{{ t('user_ldap', 'Edit LDAP Query') }}
 			</NcCheckboxRadioSwitch>
 
 			<div v-if="ldapLoginFilterMode">
 				<NcTextArea :value.sync="ldapConfig.ldapLoginFilter"
-					:placeholder="t('user_name', 'Edit LDAP Query')"
-					:helper-text="t('user_name', 'Defines the filter to apply, when login is attempted. `%%uid` replaces the username in the login action. Example: `uid=%%uid`')" />
+					:placeholder="t('user_ldap', 'Edit LDAP Query')"
+					:helper-text="t('user_ldap', 'Defines the filter to apply, when login is attempted. `%%uid` replaces the username in the login action. Example: `uid=%%uid`')" />
 			</div>
 			<div v-else>
-				<label>{{ t('user_name', 'LDAP Filter:') }}</label>
+				<label>{{ t('user_ldap', 'LDAP Filter:') }}</label>
 				<code>{{ ldapConfig.ldapLoginFilter }}</code>
 			</div>
 		</div>

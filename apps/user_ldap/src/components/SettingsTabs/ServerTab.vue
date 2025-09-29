@@ -5,7 +5,8 @@
 <template>
 	<fieldset class="ldap-wizard__server">
 		<div class="ldap-wizard__server__line">
-			<NcButton :aria-label="t('user_ldap', 'Copy current configuration into new directory binding')"
+			<NcButton
+				:aria-label="t('user_ldap', 'Copy current configuration into new directory binding')"
 				@click="() => ldapConfigsStore.copyConfig(ldapConfigId)">
 				<template #icon>
 					<ContentCopy :size="20" />
@@ -17,6 +18,7 @@
 				<template #icon>
 					<Delete :size="20" />
 				</template>
+				{{ t('user_ldap', 'Delete configuration') }}
 			</NcButton>
 		</div>
 
@@ -30,7 +32,8 @@
 					:placeholder="t('user_ldap', 'Port')"
 					type="number"
 					autocomplete="off" />
-				<NcButton :disabled="currentWizardActions.includes('guessPortAndTLS')" @click="guessPortAndTLS">
+				<NcButton :disabled="currentWizardActions.includes('guessPortAndTLS')"
+					@click="guessPortAndTLS">
 					{{ t('user_ldap', 'Detect Port') }}
 				</NcButton>
 			</div>
@@ -64,7 +67,8 @@
 			<NcButton :disabled="currentWizardActions.includes('guessBaseDN')" @click="guessBaseDN">
 				{{ t('user_ldap', 'Detect Base DN') }}
 			</NcButton>
-			<NcButton :disabled="currentWizardActions.includes('countInBaseDN')" @click="countInBaseDN">
+			<NcButton :disabled="currentWizardActions.includes('countInBaseDN')"
+				@click="countInBaseDN">
 				{{ t('user_ldap', 'Test Base DN') }}
 			</NcButton>
 		</div>
@@ -73,7 +77,8 @@
 			<NcCheckboxRadioSwitch :checked="ldapConfig.ldapExperiencedAdmin === '1'"
 				:aria-label="t('user_ldap', 'Avoids automatic LDAP requests. Better for bigger setups, but requires some LDAP knowledge.')"
 				@update:checked="ldapConfig.ldapExperiencedAdmin = $event ? '1' : '0'">
-				{{ t('user_ldap', 'Manually enter LDAP filters (recommended for large directories)') }}
+				{{ t('user_ldap', 'Manually enter LDAP filters (recommended for large directories)')
+				}}
 			</NcCheckboxRadioSwitch>
 		</div>
 	</fieldset>

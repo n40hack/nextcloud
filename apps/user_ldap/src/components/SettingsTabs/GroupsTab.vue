@@ -25,16 +25,16 @@
 		<div class="ldap-wizard__groups__line ldap-wizard__groups__groups-filter">
 			<NcCheckboxRadioSwitch :checked="ldapGroupFilterMode"
 				@update:checked="toggleFilterMode">
-				{{ t('user_name', 'Edit LDAP Query') }}
+				{{ t('user_ldap', 'Edit LDAP Query') }}
 			</NcCheckboxRadioSwitch>
 
 			<div v-if="ldapGroupFilterMode">
 				<NcTextArea :value.sync="ldapConfig.ldapGroupFilter"
-					:placeholder="t('user_name', 'Edit LDAP Query')"
-					:helper-text="t('user_name', 'The filter specifies which LDAP groups shall have access to the {instanceName} instance.', {instanceName})" />
+					:placeholder="t('user_ldap', 'Edit LDAP Query')"
+					:helper-text="t('user_ldap', 'The filter specifies which LDAP groups shall have access to the {instanceName} instance.', {instanceName})" />
 			</div>
 			<div v-else>
-				<label>{{ t('user_name', 'LDAP Filter:') }}</label>
+				<label>{{ t('user_ldap', 'LDAP Filter:') }}</label>
 				<code>{{ ldapConfig.ldapGroupFilter }}</code>
 			</div>
 		</div>

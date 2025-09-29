@@ -5,7 +5,7 @@
 
 import path from 'path'
 
-import { DialogSeverity, getDialogBuilder, showError, showSuccess } from '@nextcloud/dialogs'
+import { DialogSeverity, getDialogBuilder,showError, showSuccess, type IDialogButton } from '@nextcloud/dialogs'
 import axios, { AxiosError, type AxiosResponse } from '@nextcloud/axios'
 import { getAppRootUrl, generateOcsUrl } from '@nextcloud/router'
 import type { OCSResponse } from '@nextcloud/typings/ocs'
@@ -61,6 +61,14 @@ export async function updateConfig(configId: string, config: LDAPConfig): Promis
 
 export async function deleteConfig(configId: string): Promise<boolean> {
 	try {
+		const isConfirmed = await confirmOperation(
+			t('user_ldap', 'Confirm action'),
+			t('user_ldap', 'Are you sure you want to permanently delete this LDAP configuration? This cannot be undone.'),
+		)
+		if (!isConfirmed) {
+			return false
+		}
+
 		await axios.delete(generateOcsUrl('apps/user_ldap/api/v1/config/{configId}', { configId }))
 		logger.debug('Deleted configuration', { configId })
 	} catch (error) {
@@ -126,28 +134,34 @@ export async function callWizard(action: WizardAction, configId: string, extraPa
 	return response.data
 }
 
-/**
- *
- * @param value
- */
 export async function showEnableAutomaticFilterInfo(): Promise<'0'|'1'> {
+	return await confirmOperation(
+		t('user_ldap', 'Mode switch'),
+		t('user_ldap', 'Switching the mode will enable automatic LDAP queries. Depending on your LDAP size they may take a while. Do you still want to switch the mode?'),
+	)
+		? '1'
+		: '0'
+}
+
+export async function confirmOperation(name: string, text: string): Promise<boolean> {
 	return new Promise((resolve) => {
-		const dialog = getDialogBuilder(t('user_ldap', 'Mode switch'))
-			.setText(t('user_ldap', 'Switching the mode will enable automatic LDAP queries. Depending on your LDAP size they may take a while. Do you still want to switch the mode?'))
+		const dialog = getDialogBuilder(name)
+			.setText(text)
+			.setSeverity(DialogSeverity.Warning)
 			.addButton({
-				label: t('user_ldap', 'No'),
+				label: t('user_ldap', 'Cancel'),
 				callback() {
 					dialog.hide()
-					resolve('1')
+					resolve(false)
 				},
 			})
 			.addButton({
-				label: t('user_ldap', 'Yes'),
+				label: t('user_ldap', 'Confirm'),
+				variant: 'error',
 				callback() {
-					resolve('0')
+					resolve(true)
 				},
 			})
-			.setSeverity(DialogSeverity.Info)
 			.build()
 
 		dialog.show()

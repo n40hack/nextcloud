@@ -13,11 +13,6 @@ export const useWizardStore = defineStore('ldap-wizard', () => {
 
 	const { selectedConfigId } = useLDAPConfigsStore()
 
-	/**
-	 *
-	 * @param action
-	 * @param params
-	 */
 	async function callWizardAction(action: WizardAction, params?: Record<string, string>) {
 		try {
 			currentWizardActions.value.push(action)
@@ -28,7 +23,7 @@ export const useWizardStore = defineStore('ldap-wizard', () => {
 	}
 
 	return {
-		currentWizardActions,
+		currentWizardActions, // TODO, is it still useful?
 		callWizardAction,
 	}
 })

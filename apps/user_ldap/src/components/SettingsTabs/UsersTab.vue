@@ -4,54 +4,51 @@
  -->
 <template>
 	<fieldset class="ldap-wizard__users">
-		{{ t('user_name', 'Listing and searching for users is constrained by these criteria:') }}
+		{{ t('user_ldap', 'Listing and searching for users is constrained by these criteria:') }}
 
 		<div class="ldap-wizard__users__line ldap-wizard__users__user-filter-object-class">
 			<NcSelect v-model="ldapUserFilterObjectclass"
 				:disabled="ldapUserFilterMode"
 				class="ldap-wizard__users__user-filter-object-class__select"
 				:options="userObjectClasses"
-				:input-label="t('user_name', 'Only these object classes:')"
+				:input-label="t('user_ldap', 'Only these object classes:')"
 				:multiple="true" />
-			{{ t('user_name', 'The most common object classes for users are organizationalPerson, person, user, and inetOrgPerson. If you are not sure which object class to select, please consult your directory admin.') }}
+			{{ t('user_ldap', 'The most common object classes for users are organizationalPerson, person, user, and inetOrgPerson. If you are not sure which object class to select, please consult your directory admin.') }}
 		</div>
 
 		<div class="ldap-wizard__users__line ldap-wizard__users__user-filter-groups">
-			<div>
-				{{ t('user_name', 'Only from these groups:') }}
-			</div>
 
 			<NcSelect v-model="ldapUserFilterGroups"
 				class="ldap-wizard__users__user-filter-groups__select"
 				:disabled="ldapUserFilterMode"
 				:options="userGroups"
-				:input-label="t('user_name', 'Only these groups:')"
+				:input-label="t('user_ldap', 'Only from these groups:')"
 				:multiple="true" />
 		</div>
 
 		<div class="ldap-wizard__users__line ldap-wizard__users__user-filter">
 			<NcCheckboxRadioSwitch :checked="ldapUserFilterMode"
 				@update:checked="toggleFilterMode">
-				{{ t('user_name', 'Edit LDAP Query') }}
+				{{ t('user_ldap', 'Edit LDAP Query') }}
 			</NcCheckboxRadioSwitch>
 
 			<div v-if="ldapUserFilterMode">
 				<NcTextArea :value.sync="ldapConfig.ldapUserFilter"
-					:placeholder="t('user_name', 'Edit LDAP Query')"
-					:helper-text="t('user_name', 'The filter specifies which LDAP users shall have access to the {instanceName} instance.', { instanceName })" />
+					:placeholder="t('user_ldap', 'Edit LDAP Query')"
+					:helper-text="t('user_ldap', 'The filter specifies which LDAP users shall have access to the {instanceName} instance.', { instanceName })" />
 			</div>
 			<div v-else>
-				<label>{{ t('user_name', 'LDAP Filter:') }}</label>
+				<label>{{ t('user_ldap', 'LDAP Filter:') }}</label>
 				<code>{{ ldapConfig.ldapUserFilter }}</code>
 			</div>
 		</div>
 
 		<div class="ldap-wizard__users__line ldap-wizard__users__user-count-check">
 			<NcButton @click="countUsers">
-				{{ t('user_name', 'Verify settings and count users') }}
+				{{ t('user_ldap', 'Verify settings and count users') }}
 			</NcButton>
 
-			<span v-if="usersCount !== undefined">{{ t('user_ldap', "User count: {userCount}", { usersCount }) }}</span>
+			<span v-if="usersCount !== undefined">{{ t('user_ldap', 'User count: {usersCount}', { usersCount }) }}</span>
 		</div>
 	</fieldset>
 </template>
