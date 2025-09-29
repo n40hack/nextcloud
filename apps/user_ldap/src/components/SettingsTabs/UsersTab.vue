@@ -126,7 +126,7 @@ async function toggleFilterMode(value: boolean) {
 	if (value) {
 		ldapConfig.ldapUserFilterMode = '1'
 	} else {
-		ldapConfig.ldapUserFilterMode = await showEnableAutomaticFilterInfo()
+		ldapConfig.ldapUserFilterMode = await showEnableAutomaticFilterInfo() ? '0' : '1'
 	}
 }
 </script>

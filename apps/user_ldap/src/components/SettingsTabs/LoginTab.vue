@@ -147,7 +147,7 @@ async function toggleFilterMode(value: boolean) {
 	if (value) {
 		ldapConfig.ldapLoginFilterMode = '1'
 	} else {
-		ldapConfig.ldapLoginFilterMode = await showEnableAutomaticFilterInfo()
+		ldapConfig.ldapLoginFilterMode = await showEnableAutomaticFilterInfo() ? '0' : '1'
 	}
 }
 </script>

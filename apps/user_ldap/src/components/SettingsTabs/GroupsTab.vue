@@ -112,7 +112,7 @@ async function toggleFilterMode(value: boolean) {
 	if (value) {
 		ldapConfig.ldapGroupFilterMode = '1'
 	} else {
-		ldapConfig.ldapGroupFilterMode = await showEnableAutomaticFilterInfo()
+		ldapConfig.ldapGroupFilterMode = await showEnableAutomaticFilterInfo() ? '0' : '1'
 	}
 }
 </script>

@@ -134,13 +134,11 @@ export async function callWizard(action: WizardAction, configId: string, extraPa
 	return response.data
 }
 
-export async function showEnableAutomaticFilterInfo(): Promise<'0'|'1'> {
+export async function showEnableAutomaticFilterInfo() {
 	return await confirmOperation(
 		t('user_ldap', 'Mode switch'),
 		t('user_ldap', 'Switching the mode will enable automatic LDAP queries. Depending on your LDAP size they may take a while. Do you still want to switch the mode?'),
 	)
-		? '1'
-		: '0'
 }
 
 export async function confirmOperation(name: string, text: string): Promise<boolean> {
